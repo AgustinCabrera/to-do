@@ -1,0 +1,1 @@
+globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/api/tasks/route"]={"moduleLoading":{"prefix":"/_next/","crossOrigin":null},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"C:\\crombie\\lab-13\\lab\\":[],"C:\\crombie\\lab-13\\lab\\app\\api\\tasks\\route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}}

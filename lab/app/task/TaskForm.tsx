@@ -1,7 +1,9 @@
 "use client";
+import { useTaskContext } from '@/context/TaskContext';
 import React, { useEffect, useState } from 'react'
 
 const TaskForm = () => {
+  const {tasks, addTask} = useTaskContext();
   const [user, setUser] = useState<Array<{id:number,name:string}>>([]);
   const [userId, setUserId] = useState('');
   const [date, setDate] = useState('');
@@ -23,6 +25,8 @@ const TaskForm = () => {
       });
     
       if (!response.ok) throw new Error('Error creating task');
+          const newTask = await response.json()
+            addTask(newTask)
     } catch (error) {
       console.error('Failed to create task:', error);
       alert('Failed to create task');
@@ -30,6 +34,7 @@ const TaskForm = () => {
     setTitle('');
     setDate('');
     setUserId('');
+  
   }
 
   return (

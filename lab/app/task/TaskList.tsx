@@ -1,20 +1,16 @@
 'use client';
+import { useTaskContext } from '@/context/TaskContext';
 import React, { useEffect, useState } from 'react'
 
 const TaskList = () => {
-  const [tasks, setTasks] = useState<Array<{id:string,title:string,user:{name:string}}>>([]);
+    const { tasks, removeTask} = useTaskContext();
 
-  useEffect(()=>{
-    fetch('/api/tasks')
-      .then(res => res.json())
-      .then(data => setTasks(data))
-  },[]);
 
   const handleDelete = async (id:string) => {
     await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
-    setTasks(tasks.filter(task => task.id !== id));
+    removeTask(parseInt(id));
   }
-
+  console.log(tasks)
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">LISTA DE TAREAS</h1>
@@ -26,7 +22,7 @@ const TaskList = () => {
           >
             <div>
               <p className="font-medium text-gray-800">{task.title}</p>
-              <p className="text-sm text-gray-600">asignada a {task.user.name}</p>
+              <p className="text-sm text-gray-600">asignada a {task.user?.name}</p>
             </div>
             <button 
               onClick={() => handleDelete(task.id)} 

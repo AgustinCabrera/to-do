@@ -14,6 +14,7 @@ const TaskForm = () => {
   },[]);
 
   const handleSubmit = async (e:any) =>{
+    e.preventDefault();
     try {
       const response = await fetch('/api/tasks', {
         method: 'POST',
@@ -22,8 +23,6 @@ const TaskForm = () => {
       });
     
       if (!response.ok) throw new Error('Error creating task');
-    
-      alert('Task created successfully');
     } catch (error) {
       console.error('Failed to create task:', error);
       alert('Failed to create task');
@@ -34,42 +33,41 @@ const TaskForm = () => {
   }
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">CREA UNA NUEVA TAREA</h1>
-      <form onSubmit={handleSubmit} className='space-y-4'>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input 
-            type="text" 
-            value={title} 
-            onChange={(e)=>setTitle(e.target.value)}
-            placeholder='Inserta tu titulo'
-            required 
-            className='text-black border-black' />
+          type="text" 
+          value={title} 
+          onChange={(e)=>setTitle(e.target.value)}
+          placeholder="Inserta tu título"
+          required 
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+        />
         <input 
-            type="date" 
-            placeholder='Fecha'
-            value={date}
-            onChange={(e)=> setDate(e.target.value)}
-            className='text-black border-black' />
+          type="date" 
+          value={date}
+          onChange={(e)=> setDate(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+        />
         <select 
-            value={userId}
-            onChange={(e)=> setUserId(e.target.value)}
-            required
-            className='w-full text-black px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-            >
-          <option value="" disabled>
-            Select a user
-            </option>{user.map((user)=>(
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
+          value={userId}
+          onChange={(e)=> setUserId(e.target.value)}
+          required
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+        >
+          <option value="" disabled>Select a user</option>
+          {user.map((user)=>(<option key={user.id} value={user.id}>{user.name}</option>))}
         </select>
         <button 
-        type='submit'
-        className='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200'
-        >Create Task</button><br/>
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+        >
+          Create Task
+        </button>
       </form>
     </div>
-  )
+  );
 }
-export default TaskForm
+
+export default TaskForm;

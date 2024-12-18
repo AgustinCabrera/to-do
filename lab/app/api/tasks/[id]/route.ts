@@ -3,22 +3,10 @@ import { NextResponse, NextRequest } from "next/server";
 
 const prisma = new PrismaClient({});
 
-export async function GET(req: NextRequest, {params}:{params: {id: string}}) {
-  const { id } = params;
-  const task = await prisma.task.findUnique({ where: { id: Number(id) } });
-  return NextResponse.json(task);
-}
-export async function POST(req: NextRequest, {params}:{params: {id: string}}){
-  const { id } = params;
-  const { body } = req;
-  const task = await prisma.task.update({
-    where: { id: Number(id) },
-    data: body,
-  });
-  return NextResponse.json(task);
-}
 export async function DELETE(req: NextRequest,  {params}:{params: {id: string}}){
-  const { id } = params;
-  const task = await prisma.task.delete({ where: { id: Number(id) } });
-  return NextResponse.json(task);
-}
+  const taskId = parseInt(params.id); 
+  await prisma.task.delete({ where: { id: taskId } });
+  return new NextResponse(JSON.stringify({ message: "Task deleted" }), {
+    status: 200,
+  });
+};
